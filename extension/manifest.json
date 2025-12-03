@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "LeetCode-Mentor",
+  "version": "1.0",
+  "description": "An extension to guide students to solve LeetCode problems more efficiently.",
+  "permissions": ["scripting", "activeTab", "storage"],
+  "host_permissions": ["https://leetcode.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://leetcode.com/problems/*"],
+      "js": ["content.js"],
+      "css": ["mentor.css"]
+    }
+  ]
+}
