@@ -21,9 +21,12 @@ app.post("/chat", async (req, res) => {
 
         const prompt = buildPrompt({ title, code, message });
 
+        // Ensure history is an array
+        const chatHistory = Array.isArray(history) ? history : [];
+
         const result = await model.generateContent({
             contents: [
-                ...history.map(m => ({
+                ...chatHistory.map(m => ({
                     role: m.role,
                     parts: [{ text: m.content }]
                 })),
