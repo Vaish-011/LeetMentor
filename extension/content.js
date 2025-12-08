@@ -71,7 +71,31 @@ function appendMessage(container, text, sender) {
     container.scrollTop = container.scrollHeight;
 }
 
+async function askMentor(title, code) {
+  const apiKey = document.getElementById("api-key-input").value;
+
+  if (!apiKey) {
+    alert("Please enter your Gemini API key!");
+    return;
+  }
+
+  const res = await fetch("http://localhost:3000/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title,
+      code,
+      apiKey
+    })
+  });
+
+  const data = await res.json();
+  return data.answer;
+}
+
+
 // Initialize the mentor panel after page loads
 window.addEventListener("load", () => {
     setTimeout(createMentorPanel, 2000);
 });
+

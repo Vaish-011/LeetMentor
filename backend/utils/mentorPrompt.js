@@ -1,23 +1,20 @@
-function buildPrompt({ title, code, message }) {
+function buildPrompt({ title, code }) {
   return `
-You are an expert programming mentor. Analyze this LeetCode solution.
+You are an expert coding mentor.
 
 Problem: ${title}
 
 Student Code:
 ${code}
 
-User Question:
-${message}
-
 Tasks:
 1. Explain what the code tries to do.
-2. Identify bugs or failing test cases.
+2. Find bugs.
 3. Suggest improvements.
-4. Provide time & space complexity.
-5. Give 3 edge cases to test.
+4. Time & space complexity.
+5. 3 edge cases to test.
 
-Keep it short but useful.
+Be clear and concise.
 `;
 }
 
