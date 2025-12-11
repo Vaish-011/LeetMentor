@@ -9,7 +9,7 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
       }
 
       try {
-        const result = await fetch("http://localhost:3000/chat", {
+        const result = await fetch("https://leetmentor.onrender.com/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
