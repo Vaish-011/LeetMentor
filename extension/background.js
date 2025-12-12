@@ -1,14 +1,15 @@
 chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
   if (req.action === "CHATBOT") {
-    
-    chrome.storage.local.get("gemini_api_key", async (data) => {
-
-      if (!data.gemini_api_key) {
-        sendResponse({ answer: "❌ No API key found. Please add it from extension popup." });
-        return;
-      }
-
+    // Use async IIFE to safely handle async/await
+    (async () => {
       try {
+        const data = await new Promise(resolve => chrome.storage.local.get("gemini_api_key", resolve));
+
+        if (!data.gemini_api_key) {
+          sendResponse({ answer: "❌ No API key found. Please add it from extension popup." });
+          return;
+        }
+
         const result = await fetch("https://leetmentor.onrender.com/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -27,8 +28,8 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
       } catch (err) {
         sendResponse({ answer: "Backend error: " + err.message });
       }
-    });
+    })();
 
-    return true; // KEEP CHANNEL OPEN
+    return true; // IMPORTANT: Keeps the message channel open for async response
   }
 });
